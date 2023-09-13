@@ -7,7 +7,7 @@ import './header.scss'
 
 const Header = () => {
     return (
-        <div className='Header'>
+        <header className='Header'>
             <nav className="main-nav">
                 <Link to="/Index" className="main-nav-logo">
                     <img src={ArgentBankLogo} className="main-nav-logo-image" alt="Argent Bank Logo" />
@@ -16,13 +16,13 @@ const Header = () => {
 
 
                 <div>
-                    <Link to="/SignIn" className="main-nav-item ">
+                    <Link to="/SignIn" className="main-nav-item">
                         <FaUserCircle />
-                        Sign In
+                        <p>Sign In</p>
                     </Link>
                 </div>
             </nav>
-        </div>
+        </header>
     );
 };
 

@@ -1,11 +1,12 @@
 import React from 'react';
 import './index.scss'
+import Banner from '../../components/banner/Banner.jsx';
 
 const Index = () => {
     return (
-        <div className='Index'>
-            Index.jsx
-        </div>
+        <main className='Index'>
+            <Banner />
+        </main>
     );
 };
 

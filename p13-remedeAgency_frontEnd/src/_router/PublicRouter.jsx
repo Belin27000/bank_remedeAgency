@@ -9,7 +9,7 @@ const PublicRouter = () => {
             <Route element={<Layout />}>
                 <Route index element={<Index />} />
                 <Route path='/index' element={<Index />} />
-                <Route path='/sign-in' element={<SignIn />} />
+                <Route path='/SignIn' element={<SignIn />} />
             </Route>
         </Routes>
     );

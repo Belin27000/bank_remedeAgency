@@ -1,6 +1,5 @@
-import './App.css'
-import Test from '@/pages/Test.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import PublicRouter from '@/_router/PublicRouter.jsx'
 
 function App() {
 
@@ -8,7 +7,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='/*' element={<Test />} />
+          <Route path='/*' element={<PublicRouter />} />
         </Routes>
       </BrowserRouter>
     </>

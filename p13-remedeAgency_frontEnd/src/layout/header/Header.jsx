@@ -13,8 +13,6 @@ const Header = () => {
                     <img src={ArgentBankLogo} className="main-nav-logo-image" alt="Argent Bank Logo" />
                     <h1 className="sr-only">Argent Bank</h1>
                 </Link>
-
-
                 <div>
                     <Link to="/SignIn" className="main-nav-item">
                         <FaUserCircle />

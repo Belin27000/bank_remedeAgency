@@ -1,9 +1,15 @@
 import React from 'react';
 import './signIn.scss'
 import { FaUserCircle } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom';
 
 
 const SignIn = () => {
+    let navigate = useNavigate()
+    const userLogin = () => {
+        navigate("/User")
+    }
+
     return (
         <main className="main bg-dark">
             <section className="sign-in-content">
@@ -23,8 +29,7 @@ const SignIn = () => {
                         <label htmlFor="remember-me">Remember me</label
                         >
                     </div>
-                    {/* <a href="./user.html" className="sign-in-button">Sign In</a> */}
-                    <button className="sign-in-button">Sign In</button>
+                    <button className="sign-in-button" onClick={userLogin}>Sign In</button>
                 </form>
             </section>
         </main>

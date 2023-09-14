@@ -1,0 +1,26 @@
+{
+    "USER_DATA": [
+        {
+            "id": 1,
+            "firstName": "Tony",
+            "lastName": "Jarvis"
+        }
+    ],
+    "USER_ACCOUNT": [
+        {
+            "Userid": 1,
+            "Saving": "x8349",
+            "Balance": "$2,082.79"
+        },
+        {
+            "Userid": 1,
+            "Saving": "x6712",
+            "Balance": "$10,928.42"
+        },
+        {
+            "Userid": 1,
+            "Saving": "x8349",
+            "Balance": "$184.30"
+        }
+    ]
+}

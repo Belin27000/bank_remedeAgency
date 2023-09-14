@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import accountData from '@/assets/data/accountData.json'
 import Account from '../../components/account/Account.jsx';
 import './user.scss'

@@ -2,33 +2,55 @@ import './signIn.scss'
 import { FaUserCircle } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom';
 
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../Store/userSlice.jsx';
+
 
 const SignIn = () => {
-    let navigate = useNavigate()
-    const userLogin = () => {
-        navigate("/User")
+
+    const [email, setEmail] = useState('tony@stark.com');
+    const [password, setPassword] = useState('password123');
+
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+
+    const handleLoginEvent = (e) => {
+        e.preventDefault();
+        let userCredential = {
+            email, password
+        }
+        dispatch(loginUser(userCredential)).then((result) => {
+            if (result.payload) {
+                setEmail('');
+                setPassword('');
+                navigate('/user')
+            }
+        })
     }
+
 
     return (
         <main className="main bg-dark">
             <section className="sign-in-content">
                 <FaUserCircle className='sign-in-icon' />
                 <h1>Sign In</h1>
-                <form>
+                <form onSubmit={handleLoginEvent} >
                     <div className="input-wrapper">
                         <label htmlFor="username">Username</label>
-                        <input type="text" id="username" />
+                        <input type="email" id="username" value={email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
                     <div className="input-wrapper">
                         <label htmlFor="password">Password</label>
-                        <input type="password" id="password" />
+                        <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <div className="input-remember">
                         <input type="checkbox" id="remember-me" />
                         <label htmlFor="remember-me">Remember me</label
                         >
                     </div>
-                    <button className="sign-in-button" onClick={userLogin}>Sign In</button>
+                    <button className="sign-in-button" >Sign In</button>
                 </form>
             </section>
         </main>

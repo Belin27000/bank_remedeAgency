@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../../Store/userSlice.jsx';
-
+//back: npm run server
+//front: npm run dev
 
 const SignIn = () => {
 

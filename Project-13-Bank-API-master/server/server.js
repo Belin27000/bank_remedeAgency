@@ -5,11 +5,11 @@ const swaggerUi = require('swagger-ui-express')
 const yaml = require('yamljs')
 const swaggerDocs = yaml.load('./swagger.yaml')
 const dbConnection = require('./database/connection')
-
+const dotenv = require("dotenv").config({ encoding: "latin1" });
 dotEnv.config()
 
 const app = express()
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 
 // Connect to the database
 dbConnection()

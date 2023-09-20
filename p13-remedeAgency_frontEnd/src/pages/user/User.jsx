@@ -8,29 +8,40 @@ import { getUserAccount } from '../../Store/userAccountSlice.jsx';
 const Profile = () => {
     const [firstName, SetFirstname] = useState('')
     const [lastName, SetLastname] = useState('')
+    const [newFirstName, setNewFirstName] = useState('')
+    const [newLastName, SetNewLastName] = useState('')
     const account = accountData.USER_ACCOUNT
     const dispatch = useDispatch()
     const [openEdit, setOpenEdit] = useState(false)
-
-    // console.log(token);
 
 
     useEffect(() => {
         dispatch(getUserAccount()).then((result) => {
             SetFirstname(result.payload.body.firstName)
             SetLastname(result.payload.body.lastName)
+            setNewFirstName(result.payload.body.firstName)
+            SetNewLastName(result.payload.body.lastName)
         })
 
     }, [])
 
-    const handleEditName = () => {
-        if (openEdit) {
-            console.log('je peux changer le nom');
-            setOpenEdit(!openEdit)
-        } else {
-            console.log('je ne peux pas changer le nom');
-            setOpenEdit(!openEdit)
-        }
+    const onSubmit = (event) => {
+        event.preventDefault();
+        SetFirstname(newFirstName);
+        SetLastname(newLastName)
+        setOpenEdit(false)
+
+    }
+    const handleNewName = () => {
+        setOpenEdit(true)
+
+    }
+
+    const handleCancel = () => {
+        setNewFirstName(firstName)
+        SetNewLastName(lastName)
+        setOpenEdit(false)
+
     }
 
     return (
@@ -40,19 +51,19 @@ const Profile = () => {
                 {!openEdit ? (
                     <div>
                         <h2>{firstName} {lastName}!</h2>
-                        <button className="edit-button" onClick={handleEditName}>Edit Name</button>
+                        <button className="edit-button" onClick={handleNewName}>Edit Name</button>
                     </div>
                 ) : (
-                    <div className="header-edit">
-                        <div className='header-edit-input'>
-                            <input type="text" value={firstName} onChange={(e) => SetFirstname(e.target.value)} />
-                            <input type="text" value={lastName} onChange={(e) => SetLastname(e.target.value)} />
+                    <form className="header-edit" onSubmit={onSubmit}>
+                        <div className='header-edit-input' >
+                            <input type="text" id="firstName" value={newFirstName} onChange={(e) => setNewFirstName(e.target.value)} />
+                            <input type="text" id="lastName" value={newLastName} onChange={(e) => SetNewLastName(e.target.value)} />
                         </div>
                         <div className='header-edit-button'>
-                            <button className="edit-button" onClick={handleEditName}>Save</button>
-                            <button className="edit-button" onClick={handleEditName}>Cancel</button>
+                            <button className="edit-button" type='submit'>Save</button>
+                            <button className="edit-button" onClick={handleCancel} >Cancel</button>
                         </div>
-                    </div>
+                    </form>
                 )
                 }
             </div>

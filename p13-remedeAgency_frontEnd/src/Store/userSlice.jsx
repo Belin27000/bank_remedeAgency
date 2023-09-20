@@ -6,9 +6,8 @@ export const loginUser = createAsyncThunk(
     async (userCredential) => {
         console.log(userCredential);
         const request = await axios.post('http://localhost:3001/api/v1/user/login/', userCredential);
-        const response = await request.data.data;
-        console.log(request);
-        localStorage.setItem('user', JSON.stringify(response));
+        const response = await request.data.body.token;
+        localStorage.setItem('user', response);
         return response;
     }
 )
@@ -17,7 +16,14 @@ const userSlice = createSlice({
     initialState: {
         loading: false,
         user: null,
+        isAuthenticated: false,
         error: null
+    },
+    reducers: {
+        logOutUser: (state) => {
+            state.isAuthenticated = false;
+            localStorage.removeItem('user');
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -28,6 +34,7 @@ const userSlice = createSlice({
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.loading = false;
+                state.isAuthenticated = true;
                 state.user = action.payload;
                 state.error = null;
             })
@@ -46,5 +53,5 @@ const userSlice = createSlice({
     }
 
 })
-
+export const { logOutUser } = userSlice.actions;
 export default userSlice.reducer;

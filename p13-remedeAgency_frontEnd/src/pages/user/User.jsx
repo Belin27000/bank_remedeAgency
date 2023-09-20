@@ -1,14 +1,30 @@
 import accountData from '@/assets/data/accountData.json'
 import Account from '../../components/account/Account.jsx';
 import './user.scss'
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { getUserAccount } from '../../Store/userAccountSlice.jsx';
 
-const User = () => {
-    const name = accountData.USER_DATA[0].firstName + ' ' + accountData.USER_DATA[0].lastName
+const Profile = () => {
+    const [firstName, SetFirstname] = useState('')
+    const [lastName, SetLastname] = useState('')
     const account = accountData.USER_ACCOUNT
+    const dispatch = useDispatch()
+
+    // console.log(token);
+
+
+    useEffect(() => {
+        dispatch(getUserAccount()).then((result) => {
+            SetFirstname(result.payload.body.firstName)
+            SetLastname(result.payload.body.lastName)
+        })
+
+    }, [])
     return (
         <main className='main bg-dark'>
             <div className="header">
-                <h1>Welcome back<br />{name}</h1>
+                <h1>Welcome back<br />{firstName} {lastName}!</h1>
                 <button className="edit-button">Edit Name</button>
             </div>
             <div>
@@ -29,4 +45,4 @@ const User = () => {
     );
 };
 
-export default User;
+export default Profile;

@@ -1,15 +1,14 @@
 import axios from 'axios'
-export const getUser = (userCredential) => {
-    return new Promise((onSuccess, onFail) => {
-        axios
-            .post('http://localhost:3001/api/v1/user/login', JSON.stringify(userCredential))
-            .then((response, error) => {
-                if (response || error) {
-                    return onFail(`Response failure:${error}`);
-                }
-                onSuccess(response);
-                console.log(response);
-            });
-    });
+import { loginUser } from '@/Store/userSlice.jsx';
+export default async function loginUser(userCredential) {
+    console.log(userCredential);
+    const request = await axios.post('http://localhost:3001/api/v1/user/login/', userCredential);
+    const response = await request.data.body.token;
+    // console.log(response);
+    localStorage.setItem('user', JSON.stringify(response));
+    return response;
 }
-getUser()
+
+//si jamais tu veux utiliser le call api de manière séparé, importe cette function dans userSlice
+
+console.log(loginUser);

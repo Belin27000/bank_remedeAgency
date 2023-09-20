@@ -43,8 +43,6 @@ Your server should now be running at http://locahost:3001 and you will now have 
 
 ## Populated Database Data
 
-Once you run the `populate-db` script, you should have two users in your database:
-
 ### Tony Stark
 
 - First Name: `Tony`

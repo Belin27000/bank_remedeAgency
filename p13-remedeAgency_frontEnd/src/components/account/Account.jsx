@@ -1,6 +1,6 @@
 
 const Account = ({ saving, balance }) => {
-    console.log(saving, balance);
+    // console.log(saving, balance);
 
     return (
         <div className='account-content-wrapper'>

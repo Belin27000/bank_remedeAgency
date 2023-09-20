@@ -8,7 +8,7 @@ import { loginUser } from '../../Store/userSlice.jsx';
 //back: npm run server
 //front: npm run dev
 
-const SignIn = () => {
+const Login = () => {
 
     const [email, setEmail] = useState('tony@stark.com');
     const [password, setPassword] = useState('password123');
@@ -24,9 +24,9 @@ const SignIn = () => {
         }
         dispatch(loginUser(userCredential)).then((result) => {
             if (result.payload) {
-                setEmail('');
-                setPassword('');
-                navigate('/user')
+                // setEmail('');
+                // setPassword('');
+                navigate('/profile')
             }
         })
     }
@@ -48,8 +48,7 @@ const SignIn = () => {
                     </div>
                     <div className="input-remember">
                         <input type="checkbox" id="remember-me" />
-                        <label htmlFor="remember-me">Remember me</label
-                        >
+                        <label htmlFor="remember-me">Remember me</label>
                     </div>
                     <button className="sign-in-button" >Sign In</button>
                 </form>
@@ -58,4 +57,4 @@ const SignIn = () => {
     );
 };
 
-export default SignIn;
+export default Login;

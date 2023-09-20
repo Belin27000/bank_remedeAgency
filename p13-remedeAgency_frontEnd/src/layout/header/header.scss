@@ -21,6 +21,13 @@
     align-items: center;
     padding: 5px 20px;
 
+    &-profil {
+        width: 25%;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
 }
 
 .main-nav a {

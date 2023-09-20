@@ -10,8 +10,8 @@ const PublicRouter = () => {
             <Route element={<Layout />}>
                 <Route index element={<Index />} />
                 <Route path='/index' element={<Index />} />
-                <Route path='/SignIn' element={<SignIn />} />
-                <Route path='/User' element={<User />} />
+                <Route path='/login' element={<SignIn />} />
+                <Route path='/profile' element={<User />} />
             </Route>
         </Routes>
     );

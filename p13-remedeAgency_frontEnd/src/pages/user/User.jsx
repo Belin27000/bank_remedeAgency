@@ -1,34 +1,47 @@
 import accountData from '@/assets/data/accountData.json'
-import Account from '../../components/account/Account.jsx';
+import Account from '@/components/account/Account.jsx';
 import './user.scss'
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { getUserAccount } from '../../Store/userAccountSlice.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { profilUpdate } from '@/Store/profilUpdateSlice.jsx';
+import { getUserAccount } from '@/Store/userAccountSlice.jsx'
+
 
 const Profile = () => {
+    const userAccount = useSelector((state) => state.userAccount.userAccount)
     const [firstName, SetFirstname] = useState('')
     const [lastName, SetLastname] = useState('')
     const [newFirstName, setNewFirstName] = useState('')
     const [newLastName, SetNewLastName] = useState('')
     const account = accountData.USER_ACCOUNT
-    const dispatch = useDispatch()
     const [openEdit, setOpenEdit] = useState(false)
-
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getUserAccount()).then((result) => {
-            SetFirstname(result.payload.body.firstName)
-            SetLastname(result.payload.body.lastName)
-            setNewFirstName(result.payload.body.firstName)
-            SetNewLastName(result.payload.body.lastName)
-        })
+        // Dispatch l'action pour récupérer le profil de l'utilisateur
+        dispatch(getUserAccount());
+    }, [dispatch]);
 
-    }, [])
+    useEffect(() => {
+        if (userAccount) {
+            SetFirstname(userAccount.body.firstName)
+            SetLastname(userAccount.body.lastName)
+            setNewFirstName(userAccount.body.firstName)
+            SetNewLastName(userAccount.body.lastName)
+        }
+    }, [userAccount])
 
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
         SetFirstname(newFirstName);
         SetLastname(newLastName)
+        const updatedUserData = {
+            firstName: newFirstName,
+            lastName: newLastName,
+
+        }
+
+        dispatch(profilUpdate(updatedUserData))
         setOpenEdit(false)
 
     }

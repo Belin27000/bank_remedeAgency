@@ -46,6 +46,38 @@
 .header {
     color: #fff;
     margin-bottom: 2rem;
+
+    &-edit {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    &-edit-input {
+        width: 80%;
+
+        >input {
+            line-height: 2rem;
+            margin: 0 1rem;
+        }
+    }
+
+    &-edit-button {
+        width: 80%;
+        display: flex;
+        justify-content: center;
+
+        >button {
+            margin: 1rem;
+            width: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        height: 24px;
+    }
 }
 
 .transaction-button {

@@ -3,7 +3,7 @@ import ArgentBankLogo from '@/assets/img/argentBankLogo.png'
 import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa'
 import './header.scss'
 import { useDispatch, useSelector } from 'react-redux';
-import { logOutUser } from '../../Store/userSlice.jsx';
+import { logOutUser } from '../../Store/LoginSlice.jsx';
 
 const Header = () => {
 
@@ -24,13 +24,16 @@ const Header = () => {
                 {!isAuthenticated ? (
                     <div>
                         <Link to="/login" className="main-nav-item">
+                            <FaUserCircle />
                             <p>Sign In</p>
                         </Link>
                     </div>
                 ) : (
                     <div className='main-nav-profil'>
-                        <FaUserCircle />
-                        {userAccount?.body.firstName}
+                        <div>
+                            <FaUserCircle />
+                            {userAccount?.body.firstName}
+                        </div>
                         <Link to="/login" className="main-nav-item" onClick={handleSignOut}>
                             <FaSignOutAlt />
                             <p>Sign Out</p>

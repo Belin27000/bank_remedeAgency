@@ -10,6 +10,7 @@ const Profile = () => {
     const [lastName, SetLastname] = useState('')
     const account = accountData.USER_ACCOUNT
     const dispatch = useDispatch()
+    const [openEdit, setOpenEdit] = useState(false)
 
     // console.log(token);
 
@@ -21,11 +22,39 @@ const Profile = () => {
         })
 
     }, [])
+
+    const handleEditName = () => {
+        if (openEdit) {
+            console.log('je peux changer le nom');
+            setOpenEdit(!openEdit)
+        } else {
+            console.log('je ne peux pas changer le nom');
+            setOpenEdit(!openEdit)
+        }
+    }
+
     return (
         <main className='main bg-dark'>
             <div className="header">
-                <h1>Welcome back<br />{firstName} {lastName}!</h1>
-                <button className="edit-button">Edit Name</button>
+                <h1>Welcome back</h1>
+                {!openEdit ? (
+                    <div>
+                        <h2>{firstName} {lastName}!</h2>
+                        <button className="edit-button" onClick={handleEditName}>Edit Name</button>
+                    </div>
+                ) : (
+                    <div className="header-edit">
+                        <div className='header-edit-input'>
+                            <input type="text" value={firstName} onChange={(e) => SetFirstname(e.target.value)} />
+                            <input type="text" value={lastName} onChange={(e) => SetLastname(e.target.value)} />
+                        </div>
+                        <div className='header-edit-button'>
+                            <button className="edit-button" onClick={handleEditName}>Save</button>
+                            <button className="edit-button" onClick={handleEditName}>Cancel</button>
+                        </div>
+                    </div>
+                )
+                }
             </div>
             <div>
                 {

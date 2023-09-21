@@ -44,6 +44,8 @@ const Profile = () => {
         dispatch(profilUpdate(updatedUserData))
         setOpenEdit(false)
 
+        dispatch(getUserAccount());
+
     }
     const handleNewName = () => {
         setOpenEdit(true)

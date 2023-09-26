@@ -7,8 +7,9 @@ import { logOutUser } from '../../Store/LoginSlice.jsx';
 import { useEffect, useState } from 'react';
 
 const Header = () => {
-
+    const [userName, SetUserName] = useState('')
     const [isLog, setIsLog] = useState(false)
+    const [loading, setLoading] = useState(true)
     const isAuthenticated = useSelector((state) => state.user.isAuthenticated)
     const userAccount = useSelector((state) => state.userAccount.userAccount)
     const dispatch = useDispatch()
@@ -18,10 +19,24 @@ const Header = () => {
     }
     useEffect(() => {
         const token = localStorage.getItem('user');
-        if (token) {
+        console.log(isAuthenticated);
+        if (isAuthenticated || token) {
+            if (userAccount && userAccount.body && userAccount.body.firstName) {
+                SetUserName(userAccount.body.firstName);
+                console.log({ userName });
+            }
             setIsLog(true)
+            setLoading(false)
+        } else {
+            setIsLog(false)
+
         }
-    }, [])
+    }, [dispatch, isAuthenticated, userAccount])
+
+    if (loading) return (
+        <h3>Chargement des données en cours...</h3>
+    )
+
     return (
         <header className='Header'>
             <nav className="main-nav">
@@ -29,11 +44,11 @@ const Header = () => {
                     <img src={ArgentBankLogo} className="main-nav-logo-image" alt="Argent Bank Logo" />
                     <h1 className="sr-only">Argent Bank</h1>
                 </Link>
-                {isAuthenticated || isLog ? (
+                {isLog ? (
                     <div className='main-nav-profil'>
                         <div>
                             <FaUserCircle />
-                            {userAccount?.body.firstName}
+                            {userName}
                         </div>
                         <Link to="/login" className="main-nav-item" onClick={handleSignOut}>
                             <FaSignOutAlt />

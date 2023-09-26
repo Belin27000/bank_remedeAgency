@@ -21,10 +21,10 @@ axios.interceptors.request.use(
 export const profilUpdate = createAsyncThunk(
     'user/update',
     async (updatedUserData) => {
-        console.log(updatedUserData);
         try {
 
             const request = await axios.put(`http://localhost:3001/api/v1/user/profile/`, updatedUserData);
+            console.log(request.data);
             return request.data
 
         } catch (error) {

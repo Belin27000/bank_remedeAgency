@@ -24,6 +24,7 @@ export const getUserAccount = createAsyncThunk(
         try {
 
             const request = await axios.post(`http://localhost:3001/api/v1/user/profile/`);
+            console.log(request);
             return request.data
 
         } catch (error) {

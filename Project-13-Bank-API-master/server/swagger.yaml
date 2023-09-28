@@ -12,7 +12,7 @@ paths:
   /user/login:
     post:
       tags:
-        - User Module
+        - Auth Module
       summary: Login
       description: API for Login
       parameters:
@@ -36,7 +36,7 @@ paths:
   /user/signup:
     post:
       tags:
-        - User Module
+        - Auth Module
       summary: Signup
       description: API for Signup
       parameters:
@@ -117,7 +117,7 @@ paths:
       security:
         - Bearer: []
       tags:
-        - User Module
+        - transaction Module
       summary: View User Transactions
       description: API for viewing user transactions for a specific account
       parameters:
@@ -149,7 +149,7 @@ paths:
       security:
         - Bearer: []
       tags:
-        - User Module
+        - transaction Module
       summary: Update Transaction Note and/or category
       description: PAI for updating the note of a transaction
       parameters:
@@ -162,7 +162,7 @@ paths:
           description: Update transaction note
           required: true
           schema:
-            $ref: '#/definitions/Transaction'
+            $ref: '#/definitions/TransactionUpdate'
       produces:
         - application/json
       responses:
@@ -229,9 +229,21 @@ definitions:
         type: string
       lastName:
         type: string
+  TransactionUpdate:
+    type: object
+    properties:
+      category:
+        type: string
+        description: Category of the transaction
+      note:
+        type: string
+        description: Additional note for the transaction
   Transaction:
     type: object
     properties:
+      transactionId:
+        type: string
+        description: ID of the transaction to be updated
       date:
         type: string
         description: Transaction date
@@ -259,6 +271,3 @@ definitions:
       note:
         type: string
         description: Additional notes for the transaction
-      transactionId:
-        type: string
-        description: ID of the transaction to be updated

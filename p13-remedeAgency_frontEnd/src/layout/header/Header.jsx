@@ -15,6 +15,7 @@ const Header = () => {
     const dispatch = useDispatch()
 
     const handleSignOut = () => {
+        SetUserName('')
         dispatch(logOutUser())
     }
     useEffect(() => {
@@ -31,9 +32,9 @@ const Header = () => {
             setIsLog(false)
 
         }
-    }, [dispatch, isAuthenticated, userAccount])
+    }, [dispatch, isAuthenticated, userAccount, userName])
 
-    if (loading) return (
+    if (loading && isLog) return (
         <h3>Chargement des données en cours...</h3>
     )
 

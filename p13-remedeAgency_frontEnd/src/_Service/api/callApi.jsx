@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { loginUser } from '@/Store/userSlice.jsx';
+
 export default async function loginUser(userCredential) {
     console.log(userCredential);
     const request = await axios.post('http://localhost:3001/api/v1/user/login/', userCredential);

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { profilUpdate } from '@/Store/profilUpdateSlice.jsx';
 import { getUserAccount } from '@/Store/userAccountSlice.jsx'
+import { useNavigate } from 'react-router-dom';
 
 
 const Profile = () => {
@@ -16,6 +17,8 @@ const Profile = () => {
     const account = accountData.USER_ACCOUNT
     const [openEdit, setOpenEdit] = useState(false)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
 
     useEffect(() => {
         // Dispatch l'action pour récupérer le profil de l'utilisateur
@@ -58,9 +61,14 @@ const Profile = () => {
         setOpenEdit(false)
 
     }
+    useEffect(() => {
+        if (userAccount === null) {
+            navigate('/index')
+        }
+    }, [])
 
     return (
-        <main className='main bg-dark'>
+        <main className='main bg-dark' >
             <div className="header">
                 <h1>Welcome back</h1>
                 {!openEdit ? (
@@ -96,8 +104,10 @@ const Profile = () => {
                     })
                 }
             </div>
-        </main>
+        </main >
+
     );
+
 };
 
 export default Profile;

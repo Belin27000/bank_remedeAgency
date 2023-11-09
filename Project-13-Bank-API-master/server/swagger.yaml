@@ -112,24 +112,24 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/viewTransaction:
+  /user/{AccountId}/AllTransaction:
     get:
       security:
         - Bearer: []
       tags:
         - transaction Module
       summary: View User Transactions
-      description: API for viewing user transactions for a specific account
+      description: API for viewing user transactions by account
       parameters:
         - in: header
           type: string
           name: Authorization
           description: Attach Bearer JWT token
           required: true
-        - in: query
-          name: accountId
+        - in: path
+          name: AccountId
           type: integer
-          description: Account ID for which transactions are to be fetched
+          description: (Optional) Account ID for which transactions are to be fetched
           required: true
       produces:
         - application/json
@@ -144,37 +144,152 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-  /user/updateTransaction:
-    put:
+  /user/{AccountId}/transaction/{Id}:
+    get:
       security:
         - Bearer: []
       tags:
         - transaction Module
-      summary: Update Transaction Note and/or category
-      description: PAI for updating the note of a transaction
+      summary: View a Single Transaction
+      description: API for viewing a single transaction by its transaction ID
       parameters:
         - in: header
           type: string
           name: Authorization
           description: Attach Bearer JWT token
-        - in: body
-          name: body
-          description: Update transaction note
           required: true
-          schema:
-            $ref: '#/definitions/TransactionUpdate'
+        - in: path
+          type: string
+          name: AccountId
+          required: true
+        - in: path
+          type: string
+          name: Id
+          description: Transaction ID for the transaction to be fetched
+          required: true
       produces:
         - application/json
       responses:
         '200':
-          description: Transaction note updated successfully
+          description: Transaction retrieved successfully
           schema:
-            $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/Transaction'
         '400':
           description: Invalid Fields
+        '404':
+          description: Transaction not found
         '500':
           description: Internal Server Error
-
+  /user/{AccountId}/transactionmonth/{MM-YY}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - transaction Module
+      summary: View a Single Transaction
+      description: API for viewing a single transaction by its transaction ID
+      parameters:
+        - in: header
+          type: string
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+        - in: path
+          type: string
+          name: AccountId
+          required: true
+        - in: path
+          type: string
+          name: MM-YY
+          description: Transaction by month i.e:MM-YY
+          required: true
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction retrieved successfully
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid Fields
+        '404':
+          description: Transaction not found
+        '500':
+          description: Internal Server Error
+  /user/{AccountId}/Transaction/{transactionId}/note:
+    patch:
+      summary: Update information of a transaction note
+      security:
+        - Bearer: []
+      tags:
+        - transaction Module
+      parameters:
+        - name: AccountId
+          in: path
+          description: ID of the AccountId
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          description: ID of the transaction to update
+          required: true
+          type: string
+        - name: Note
+          in: body
+          description: Object representing the new transaction information
+          required: true
+          schema:
+            $ref: "#/definitions/TransactionUpdateNote"
+      responses:
+        200:
+          description: Success - Transaction successfully updated
+        400:
+          description: Bad Request - Data validation error
+        401:
+          description: Unauthorized - Invalid token
+        403:
+          description: Forbiden
+        404:
+          description: Transaction not found - Invalid transaction ID
+        500:
+          description: Internal Server Error
+  /user/{AccountId}/Transaction/{transactionId}/Category:
+    patch:
+      summary: Update information of a transaction Category
+      security:
+        - Bearer: []
+      tags:
+        - transaction Module
+      parameters:
+        - name: AccountId
+          in: path
+          description: ID of the AccountId
+          required: true
+          type: string
+        - name: transactionId
+          in: path
+          description: ID of the transaction to update
+          required: true
+          type: string
+        - name: Category
+          in: body
+          description: Object representing the category transaction information
+          required: true
+          schema:
+            $ref: "#/definitions/TransactionUpdateCategory"
+      responses:
+        200:
+          description: Success - Transaction successfully updated
+        400:
+          description: Bad Request - Data validation error
+        401:
+          description: Unauthorized - Invalid token
+        403:
+          description: Forbiden
+        404:
+          description: Transaction not found - Invalid transaction ID
+        500:
+          description: Internal Server Error
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -229,15 +344,18 @@ definitions:
         type: string
       lastName:
         type: string
-  TransactionUpdate:
+  TransactionUpdateNote:
+    type: object
+    properties:
+      note:
+        type: string
+        description: Additional note for the transaction
+  TransactionUpdateCategory:
     type: object
     properties:
       category:
         type: string
-        description: Category of the transaction
-      note:
-        type: string
-        description: Additional note for the transaction
+        description: update Category of the transaction
   Transaction:
     type: object
     properties:
